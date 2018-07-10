@@ -1,0 +1,44 @@
+#!/bin/bash
+#export ES_HOME={{ ES_HOME_DIR }}_{{ item.node }}
+#/bin/kill `cat < ${ES_HOME}/bin/es_{{ item.node }}.pid`
+#################################################
+# ENV setting
+#################################################
+export TARGET_ES="${ES_HOME}/bin/es_{{ item.node }}.pid"
+
+#################################################
+# get target pid
+#################################################
+CNT=`ps -efww |grep ${TARGET_ES} | grep -v grep | wc -l`
+if [ ${CNT} -eq 0 ]; then
+       echo "elasticsearch es_{{ item.node }} is not running! "
+       exit 8
+fi
+PIDS=(`ps -efww | grep ${TARGET_ES} | grep -v grep | awk '{ print $2 }'`)
+
+####################
+# elasticsearch stop
+####################
+TIMEOUT=10
+TIMESPENT=0
+for _PID in ${PIDS[@]}
+do
+    /bin/kill ${_PID}
+    while [ $TIMESPENT -lt $TIMEOUT ]; do
+      CNT=`ps -efww |grep ${TARGET_ES} | grep -v grep | wc -l`
+      if [ ${CNT} -eq 0 ]; then
+         echo "elasticsearch es_{{ item.node }} is stopped!"
+         break
+      fi
+      sleep 2s
+      TIMESPENT=`expr $TIMESPENT + 2`
+    done
+done
+
+CNT=`ps -efww | grep ${TARGET_ES} | grep -v grep | wc -l`
+if [ ${CNT} -ne 0 ]; then
+   echo "elasticsearch agent es_{{ item.node }} is failed!"
+   exit 8
+fi
+
+exit 0

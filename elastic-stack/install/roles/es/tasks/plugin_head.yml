@@ -1,0 +1,41 @@
+- name: install epel-release
+  yum:
+    name: epel-release
+    state: latest
+
+#apache
+- name: install httpd
+  yum:
+    name: httpd
+    state: latest
+
+- name: start httpd
+  service:
+    name: httpd
+    enabled: yes
+    state: started
+
+#yum install npm
+- name: install npm for plugin
+  yum:
+    name: npm
+    state: latest
+
+- name: create directory for elasticsearch head
+  file: path="{{ ES_HOME_BASIS }}/elasticsearch-head-5" state=directory owner={{ ES_OWNER }} group={{ ES_GROUP }}
+
+- name: downlaod elasticsearch head file from github
+  get_url: url="https://github.com/mobz/elasticsearch-head/archive/master.zip" dest=/tmp/ mode=0755 force=yes
+#  when: opt_proxy is defined
+  environment: "{{ PROXY_ENV }}"
+
+- name: Unpack archive
+  unarchive:  src="/tmp/elasticsearch-head-master.zip" dest="{{ ES_HOME_BASIS }}/elasticsearch-head-5" copy=no creates=yes owner={{ ES_OWNER }} group={{ ES_GROUP }}
+
+- name: elasticsearch head install by npm
+  command: npm install
+  args:
+    chdir: /usr/local/elasticsearch-head-5/elasticsearch-head-master
+
+- name: head plugin link
+  file: src="/usr/local/elasticsearch-head-5/elasticsearch-head-master" dest=/var/www/html/elasticsearch-head-5 state=link

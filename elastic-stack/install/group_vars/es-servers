@@ -1,0 +1,19 @@
+#####################################
+# for ES-Server
+#####################################
+#Repository
+NEXUS_3RD_URL: "http://localHost/service/local/repositories/thirdparty/content/"
+
+#Elasticsearch
+ES_OWNER: "elasticsearch"
+ES_GROUP: "elasticsearch"
+ES_MEMORY_LOCK: "false"
+ES_HOME_BASIS: "/usr/local/"
+ES_HOME_DIR: "/usr/local/elasticsearch"
+ES_CLUSTER_NAME: "minsoo"
+ES_DATA_PATH: "/elastic/elasticsearch"
+ES_SERVER_NODES_INFO: [{node: "01", port: 9200, tcp_port: 9300},{node: "02", port: 9201, tcp_port: 9301}]
+
+#Elasticsearch Download
+ES_DOWNLOAD_VERSION: "elasticsearch-6.3.0"
+ES_DOWNLOAD_URL: "https://artifacts.elastic.co/downloads/elasticsearch/{{ ES_DOWNLOAD_VERSION }}.tar.gz"

@@ -1,0 +1,7 @@
+- name: shutdown kibana
+  shell: "{{ KIBANA_HOME_DIR }}/bin/shutdown.sh"
+  become_user: "{{ KIBANA_OWNER }}"
+
+- name: remove pid file
+  file: path="{{ KIBANA_HOME_DIR }}/bin/kibana.pid" state="absent"
+  ignore_errors: True

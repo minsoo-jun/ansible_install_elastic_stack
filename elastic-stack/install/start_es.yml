@@ -1,0 +1,6 @@
+---
+- hosts: all
+  become: yes
+  become_user: elasticsearch
+  roles:
+  - role: es_startstop

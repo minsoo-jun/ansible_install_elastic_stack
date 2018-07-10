@@ -1,0 +1,36 @@
+#####################################
+# for filebeat
+#####################################
+# filebeat
+FB_DOWNLOAD_VERSION: "filebeat-5.6.5"
+FB_DOWNLOAD_URL: "https://artifacts.elastic.co/downloads/beats/filebeat/{{ FB_DOWNLOAD_VERSION }}-linux-x86_64.tar.gz"
+FB_HOME_BASIS: "/usr/local"
+FB_HOME: "{{ FB_HOME_BASIS }}/logplatform/filebeat"
+FB_CONF: "{{ FB_HOME_BASIS }}/logplatform/filebeat"
+##################################################
+# user info
+##################################################
+FB_OWNER: "logstash"
+FB_GROUP: "logstash"
+
+##################################################
+# Port definition
+##################################################
+FILE_BEAT_PORT: "5050"
+
+##################################################
+## Default value
+###################################################
+default_patterns : ["grok_patterns", "httpd"]
+filebeat: {
+    "prospector" : [
+        {
+            "index_name": "{{ INDEX_NAME }}",
+            "paths": ["/usr/local/var/logs"],
+            "scan_frequency": 300,
+            "index_date_unit": "day",
+            "index_retention_num": 1,
+            "filter_file": "filter/{{ env }}/filebeat_syslog.j2"
+        }
+    ]
+}

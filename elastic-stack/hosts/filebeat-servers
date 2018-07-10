@@ -1,0 +1,6 @@
+[filebeat-servers]
+192.168.56.20 INDEX_NAME="trvtomcat"
+
+[kafka-servers]
+192.168.56.51
+192.168.56.51

@@ -1,0 +1,5 @@
+#!/bin/bash
+export ES_JAVA_OPTS="-server -Xms{{ HEAP_SIZE }} -Xmx{{ HEAP_SIZE }}"
+export ES_HOME={{ ES_HOME_DIR }}_{{ item.node }}
+export ES_PATH_CONF=${ES_HOME}/config/
+${ES_HOME}/bin/elasticsearch -p ${ES_HOME}/bin/es_{{ item.node }}.pid > /dev/null 2>&1 &

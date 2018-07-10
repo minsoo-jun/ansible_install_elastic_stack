@@ -1,0 +1,21 @@
+- name: downlaod kibana file from elastic.co
+  get_url: url={{ KIBANA_DOWNLOAD_URL }} dest=/tmp/ mode=0755 force=yes
+#  environment: "{{ PROXY_ENV }}"
+
+#- name: Unpack archive
+#  unarchive:  src="/tmp/{{ KIBANA_DOWNLOAD_VERSION }}.tar.gz" dest="/tmp" creates=yes owner={{ KIBANA_OWNER }} group={{ KIBANA_GROUP }}
+
+- name: Unpack archive use tar
+  command: tar -xzvf /tmp/{{ KIBANA_DOWNLOAD_VERSION }}.tar.gz -C /tmp
+
+- name: change owner
+  command: chown -R {{ KIBANA_OWNER }}:{{ KIBANA_GROUP }} /tmp/{{ KIBANA_DOWNLOAD_VERSION }}
+
+- name : remove old kibana home only same version
+  command: rm -rf {{ KIBANA_HOME_BASIS }}{{ KIBANA_DOWNLOAD_VERSION }}
+
+- name: to move unarchived directory
+  command: mv -f /tmp/{{ KIBANA_DOWNLOAD_VERSION }} {{ KIBANA_HOME_BASIS }}{{ KIBANA_DOWNLOAD_VERSION }}
+
+- name: make link
+  file: src="{{ KIBANA_HOME_BASIS }}{{ KIBANA_DOWNLOAD_VERSION }}/" dest={{ KIBANA_HOME_DIR }} state=link

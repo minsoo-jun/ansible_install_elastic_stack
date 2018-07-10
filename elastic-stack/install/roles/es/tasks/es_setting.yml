@@ -1,0 +1,24 @@
+- name: create directory for data
+  file: path="{{ ES_DATA_PATH }}/data/{{ item.node }}" state=directory owner={{ ES_OWNER }} group={{ ES_GROUP }}
+  with_items:
+    - "{{ ES_SERVER_NODES_INFO }}"
+
+- name: create directory for logs
+  file: path="{{ ES_DATA_PATH }}/logs/{{ item.node }}" state=directory owner={{ ES_OWNER }} group={{ ES_GROUP }}
+  with_items:
+    - "{{ ES_SERVER_NODES_INFO }}"
+
+- name: deploy config file
+  template: src=elasticsearch.yml.j2 dest={{ ES_HOME_BASIS }}{{ ES_DOWNLOAD_VERSION }}_{{ item.node }}/config/elasticsearch.yml backup=yes
+  with_items:
+    - "{{ ES_SERVER_NODES_INFO }}"
+
+- name: deploy start shell
+  template: src=startup.sh.j2 dest={{ ES_HOME_BASIS }}{{ ES_DOWNLOAD_VERSION }}_{{ item.node }}/bin/startup.sh owner={{ ES_OWNER }} group={{ ES_GROUP }} mode=0700
+  with_items:
+    - "{{ ES_SERVER_NODES_INFO }}"
+
+- name: deploy stop shell
+  template: src=shutdown.sh.j2 dest={{ ES_HOME_BASIS }}{{ ES_DOWNLOAD_VERSION }}_{{ item.node }}/bin/shutdown.sh owner={{ ES_OWNER }} group={{ ES_GROUP }} mode=0700
+  with_items:
+    - "{{ ES_SERVER_NODES_INFO }}"

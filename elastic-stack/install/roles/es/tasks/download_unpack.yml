@@ -1,0 +1,39 @@
+- name: downlaod elasticsearch file from elastic.co
+  get_url: url={{ ES_DOWNLOAD_URL }} dest=/tmp/ mode=0755 force=yes
+#  when: opt_proxy is defined
+#  environment: "{{ PROXY_ENV }}"
+
+- name: make tmp directory for unarchive
+  file: path="/tmp/elastic/{{ item.node }}" state=directory
+  with_items:
+    - "{{ ES_SERVER_NODES_INFO }}"
+
+- name: Unpack archive
+  unarchive: src="/tmp/{{ ES_DOWNLOAD_VERSION }}.tar.gz" dest="/tmp/elastic/{{ item.node }}" owner={{ ES_OWNER }} group={{ ES_GROUP }} remote_src=yes
+  with_items:
+    - "{{ ES_SERVER_NODES_INFO }}"
+
+#- name: Unpack archive
+#  unarchive: src="/tmp/{{ ES_DOWNLOAD_VERSION }}.tar.gz" dest="/tmp/" owner={{ ES_OWNER }} group={{ ES_GROUP }} remote_src=yes
+#  with_items:
+#    - "{{ ES_SERVER_NODES_INFO }}"
+
+#- name: Copy archived
+#  command: cp -R /tmp/{{ ES_DOWNLOAD_VERSION }} /tmp/elastic/{{ item.node }}/
+#  with_items:
+#    - "{{ ES_SERVER_NODES_INFO }}"
+
+- name: remove old es home only same version
+  command: rm -rf {{ ES_HOME_BASIS }}{{ ES_DOWNLOAD_VERSION }}_{{ item.node }}
+  with_items:
+    - "{{ ES_SERVER_NODES_INFO }}"
+
+- name: to move unarchived directory
+  command: mv -f /tmp/elastic/{{ item.node }}/{{ ES_DOWNLOAD_VERSION }} {{ ES_HOME_BASIS }}{{ ES_DOWNLOAD_VERSION }}_{{ item.node }}
+  with_items:
+    - "{{ ES_SERVER_NODES_INFO }}"
+
+- name: make link
+  file: src="{{ ES_HOME_BASIS }}{{ ES_DOWNLOAD_VERSION }}_{{ item.node }}/" dest={{ ES_HOME_DIR }}_{{ item.node }} state=link
+  with_items:
+    - "{{ ES_SERVER_NODES_INFO }}"

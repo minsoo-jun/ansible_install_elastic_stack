@@ -1,0 +1,12 @@
+# unpack and make link
+- include: download_unpack.yml
+
+# make directory and apply application setting
+- include: kibana_setting.yml
+
+# stop kibana
+- include: ../../kibana_startstop/tasks/kibana_shutdown.yml
+  ignore_errors: True
+
+# start kibana
+- include: ../../kibana_startstop/tasks/kibana_start.yml

@@ -1,0 +1,39 @@
+#!/bin/bash
+export KIBANA_HOME={{ KIBANA_HOME_DIR }}
+
+#################################################
+# get target pid
+#################################################
+CNT=`ps -efww |grep ${KIBANA_HOME} | grep -v grep | wc -l`
+if [ ${CNT} -eq 0 ]; then
+       echo "kibana  is not running! "
+       exit 8
+fi
+PIDS=(`ps -efww | grep ${KIBANA_HOME} | grep -v grep | awk '{ print $2 }'`)
+
+####################
+# Kibana stop
+####################
+TIMEOUT=10
+TIMESPENT=0
+for _PID in ${PIDS[@]}
+do
+    /bin/kill ${_PID}
+    while [ $TIMESPENT -lt $TIMEOUT ]; do
+      CNT=`ps -efww |grep ${KIBANA_HOME} | grep -v grep | wc -l`
+      if [ ${CNT} -eq 0 ]; then
+         echo "kibana is stopped!"
+         break
+      fi
+      sleep 2s
+      TIMESPENT=`expr $TIMESPENT + 2`
+    done
+done
+
+CNT=`ps -efww | grep ${KIBANA_HOME} | grep -v grep | wc -l`
+if [ ${CNT} -ne 0 ]; then
+   echo "kibana is failed!"
+   exit 8
+fi
+
+exit 0

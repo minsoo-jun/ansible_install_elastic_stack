@@ -1,0 +1,5 @@
+- name: shutdown elasticsearch
+  shell: "{{ ES_HOME_DIR }}_{{ item.node }}/bin/shutdown.sh"
+  become_user: "{{ ES_OWNER }}"
+  with_items:
+    - "{{ ES_SERVER_NODES_INFO }}"

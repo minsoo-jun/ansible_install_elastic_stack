@@ -1,0 +1,10 @@
+- name: downlaod filebeat file from elastic.co
+  get_url: url={{ FB_DOWNLOAD_URL }} dest=/tmp/ mode=0755 force=yes
+#  when: opt_proxy is defined
+  environment: "{{ PROXY_ENV }}"
+
+- name: Unpack archive
+  unarchive:  src="/tmp/{{ FB_DOWNLOAD_VERSION }}.tar.gz" dest="{{ FB_HOME_BASIS }}/" copy=no creates=yes owner={{ FB_OWNER }} group={{ FB_GROUP }}
+
+- name: make link
+  file: src="{{ FB_HOME_BASIS }}{{ FB_DOWNLOAD_VERSION }}/" dest={{ FB_HOME }} state=link

@@ -1,0 +1,10 @@
+- name: start kibana
+  command: "nohup {{ KIBANA_HOME_DIR }}/bin/startup.sh"
+  become_user: "{{ KIBANA_OWNER }}"
+
+- wait_for:
+    host: "{{ IPV4_ADDR }}"
+    port: "{{ KIBANA_PORT }}"
+    delay: 2
+    timeout: 30
+  ignore_errors: True

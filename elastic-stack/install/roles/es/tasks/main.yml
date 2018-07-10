@@ -1,0 +1,18 @@
+# unpack and make link
+- include: download_unpack.yml
+
+#include os parameter setting.
+- include: os_setting.yml
+
+# make directory and apply application setting
+- include: es_setting.yml
+
+# stop es
+- include: ../../es_startstop/tasks/es_shutdown.yml
+  ignore_errors: True
+
+# start elasticsearch
+- include: ../../es_startstop/tasks/es_start.yml
+
+#include head plugin
+- include: plugin_head.yml

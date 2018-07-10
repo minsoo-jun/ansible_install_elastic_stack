@@ -1,0 +1,5 @@
+- name: template filebeat
+  template: src=filebeat.yml.j2 dest={{ FB_CONF }}/filebeat.yml owner={{ ES_OWNER }} group={{ ES_GROUP }} mode=0700
+  with_items:
+    - "{{ ES_SERVER_NODES_INFO }}"
+

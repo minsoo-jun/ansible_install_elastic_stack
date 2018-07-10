@@ -1,0 +1,12 @@
+---
+# option : start, stop, restart
+- include: ../../es_startstop/tasks/es_shutdown.yml
+  ignore_errors: True
+  when: ("stop" == "{{ option }}") or "restart" == "{{ option }}"
+
+- pause:
+    seconds: 3
+
+# start elasticsearch
+- include: ../../es_startstop/tasks/es_start.yml
+  when: ("start" == "{{ option }}") or "restart" == "{{ option }}"

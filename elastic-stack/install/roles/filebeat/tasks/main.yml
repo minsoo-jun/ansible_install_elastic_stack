@@ -1,0 +1,5 @@
+# unpack and make link
+- include: download_unpack.yml
+
+# make directory and apply application setting
+- include: filebeat_setting.yml

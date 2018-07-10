@@ -1,0 +1,5 @@
+[kibana-servers]
+192.168.56.150 IPV4_ADDR="192.168.56.150"
+
+[sub-kibana-servers]
+10.48.14.56 IPV4_ADDR="10.48.14.56"

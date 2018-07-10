@@ -1,0 +1,5 @@
+[es-servers]
+192.168.56.101 IPV4_ADDR="192.168.56.101" NODE_NAME="seoungbin" HEAP_SIZE=1g
+
+[sub-es-servers]
+10.48.14.56 IPV4_ADDR="10.48.14.56" NODE_NAME="seoungbin" HEAP_SIZE=1g

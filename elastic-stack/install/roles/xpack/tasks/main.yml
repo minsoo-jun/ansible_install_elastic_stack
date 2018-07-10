@@ -1,0 +1,80 @@
+#import vars from es-servers and kibana-servers
+- name: Include vars of es-servers
+  include_vars: "../../../group_vars/es-servers"
+
+- name: Include vars of es-servers
+  include_vars: "../../../group_vars/kibana-servers"
+
+- debug:
+    msg: "GroupName: {{ item }}"
+  with_items:
+    - "{{ group_names }}"
+  when: item == 'es-servers'
+  register: target_server
+
+- debug:
+    msg: "Stats = {{ target_server.results[0].item }}"
+
+# stop es
+- include: ../../es_startstop/tasks/es_shutdown.yml
+  ignore_errors: True
+  when: "'es-servers' == target_server.results[0].item"
+
+- name: remove xpack
+  command: "{{ ES_HOME_DIR }}_{{ item.node }}/bin/elasticsearch-plugin remove x-pack"
+  become_user: "{{ ES_OWNER }}"
+#  environment: "{{ PROXY_ENV }}"
+  ignore_errors: True
+  with_items:
+    - "{{ ES_SERVER_NODES_INFO }}"
+  when: "'es-servers' == target_server.results[0].item"
+
+- name: install xpack
+  command: "{{ ES_HOME_DIR }}_{{ item.node }}/bin/elasticsearch-plugin install x-pack"
+  become_user: "{{ ES_OWNER }}"
+#  environment: "{{ PROXY_ENV }}"
+  ignore_errors: True
+  with_items:
+    - "{{ ES_SERVER_NODES_INFO }}"
+  when: "'es-servers' == target_server.results[0].item"
+
+# start elasticsearch
+- include: ../../es_startstop/tasks/es_start.yml
+  when: "'es-servers' == target_server.results[0].item"
+
+- debug:
+    msg: "GroupName: {{ item }}"
+  with_items:
+    - "{{ group_names }}"
+  when: item == 'kibana-servers'
+  register: target_kibana_server
+
+- debug:
+    msg: "Stats = {{ target_kibana_server.results[0].item }}"
+
+# stop kibana
+- include: ../../kibana_startstop/tasks/kibana_shutdown.yml
+  ignore_errors: True
+  when: "'kibana-servers' == target_kibana_server.results[0].item"
+
+- name: install xpack
+  command: "{{ KIBANA_HOME_DIR }}/bin/kibana-plugin remove x-pack"
+  become_user: "{{ ES_OWNER }}"
+#  environment: "{{ PROXY_ENV }}"
+  ignore_errors: True
+  when: "'kibana-servers' == target_kibana_server.results[0].item"
+
+- name: install xpack
+  command: "{{ KIBANA_HOME_DIR }}/bin/kibana-plugin install x-pack"
+  become_user: "{{ ES_OWNER }}"
+#  environment: "{{ PROXY_ENV }}"
+  ignore_errors: True
+  when: "'kibana-servers' == target_kibana_server.results[0].item"
+
+# start kibana
+- include: ../../kibana_startstop/tasks/kibana_start.yml
+  when: "'kibana-servers' == target_kibana_server.results[0].item"
+
+#end
+
+

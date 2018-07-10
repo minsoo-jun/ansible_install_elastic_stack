@@ -2,6 +2,32 @@
 Ansible playbook for elastic stack
 
 ##
-elastic stack의 버전이 하다 자주 바뀌어서 로컬 virtualBox를 기준으로 쉽게 설치 가능 할 수 있게 playbook를 작성
-## 전제 조건
-1. JDK가 설치 되어 있을 것
+Elastic stack version changes frequently so that I need to tool for easy install to my local VirtualBox.
+
+## Precondition
+1. JDK must be installed
+2. Ansible must be installed: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
+
+### Install Elasticsearch
+```shell
+ansible-playbook -i hosts/es-servers -k -K install/install_es.yml -e "server=es-servers" -v
+```
+### Install Kibana
+```shell
+ansible-playbook -i hosts/kibana-servers -k -K install/install_kibana.yml -e "server=kibana-servers" -v
+```
+
+### Install x-pack for 5.x
+```shell
+ansible-playbook -i hosts/es-servers -k -K install/install_xpack.yml -e "server=es-servers" -v
+ansible-playbook -i hosts/kibana-servers -k -K install/install_xpack.yml -e "server=kibana-servers" -v
+```
+
+### Start and Stop, Restart
+```shell
+ansible-playbook -i hosts/servers -k -K install/start_es.yml -e "server=es-servers  option=start" -vvvv
+```
+```shell
+ansible-playbook -i hosts/servers -k -K install/start_kafka.yml -e "server=es-servers  option=start" -vvvv
+```
+option= start, stop, restart

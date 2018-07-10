@@ -1,0 +1,8 @@
+- name: deploy config file
+  template: src=kibana.yml.j2 dest={{ KIBANA_HOME_DIR }}/config/kibana.yml backup=yes
+
+- name: deploy start shell
+  template: src=startup.sh.j2 dest={{ KIBANA_HOME_DIR }}/bin/startup.sh owner={{ KIBANA_OWNER }} group={{ KIBANA_GROUP }} mode=0700
+
+- name: deploy stop shell
+  template: src=shutdown.sh.j2 dest={{ KIBANA_HOME_DIR }}/bin/shutdown.sh owner={{ KIBANA_OWNER }} group={{ KIBANA_GROUP }} mode=0700

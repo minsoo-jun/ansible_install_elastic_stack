@@ -1,0 +1,13 @@
+---
+# stop kibana
+- include: ../../kibana_startstop/tasks/kibana_shutdown.yml
+  ignore_errors: True
+  when: ("stop" == "{{ option }}") or "restart" == "{{ option }}"
+
+- pause:
+    seconds: 3
+  when: ("stop" == "{{ option }}") or "restart" == "{{ option }}"
+
+# start kibana
+- include: ../../kibana_startstop/tasks/kibana_start.yml
+  when: ("start" == "{{ option }}") or "restart" == "{{ option }}"
