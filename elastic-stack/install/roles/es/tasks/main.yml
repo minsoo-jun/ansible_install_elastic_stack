@@ -1,3 +1,9 @@
+# add group
+- name: Ensure group "ES_GROUP" exists
+  group:
+    name: "{{ ES_GROUP }}"
+    state: present
+
 # add user
 - name: Added user
   user:
