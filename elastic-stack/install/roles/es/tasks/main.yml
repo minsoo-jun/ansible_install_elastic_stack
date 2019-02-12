@@ -1,3 +1,9 @@
+# add user
+- name: Added user
+  user:
+    name: {{ ES_OWNER }}
+    groups: {{ ES_GROUP }}
+
 # unpack and make link
 - include: download_unpack.yml
 
