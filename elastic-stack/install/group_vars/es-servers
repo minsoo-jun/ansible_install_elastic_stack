@@ -1,19 +1,24 @@
 #####################################
-# for ES-Server
+# For ES-Server
 #####################################
-#Repository
-NEXUS_3RD_URL: "http://localHost/service/local/repositories/thirdparty/content/"
-
 #Elasticsearch
 ES_OWNER: "elasticsearch"
 ES_GROUP: "elasticsearch"
-ES_MEMORY_LOCK: "false"
+
+#Lock the memory on startup:
+ES_MEMORY_LOCK: "true"
 ES_HOME_BASIS: "/usr/local/"
 ES_HOME_DIR: "/usr/local/elasticsearch"
 ES_CLUSTER_NAME: "minsoo"
-ES_DATA_PATH: "/elastic/elasticsearch"
-ES_SERVER_NODES_INFO: [{node: "01", port: 9200, tcp_port: 9300},{node: "02", port: 9201, tcp_port: 9301}]
+ES_DATA_PATH: "/elastic"
+
+#If you want multi instance per server, set below setting
+#ES_SERVER_NODES_INFO: [{node: "01", port: 9200, tcp_port: 9300},{node: "02", port: 9201, tcp_port: 9301}]
+ES_SERVER_NODES_INFO: [{node: "01", port: 9200, tcp_port: 9300}]
+
+#Set the bind address to a specific IP (IPv4 or IPv6):
+ES_NETWORK_HOST: "0.0.0.0"
 
 #Elasticsearch Download
-ES_DOWNLOAD_VERSION: "elasticsearch-6.3.0"
+ES_DOWNLOAD_VERSION: "elasticsearch-{{ ES_STACK_VERSION }}"
 ES_DOWNLOAD_URL: "https://artifacts.elastic.co/downloads/elasticsearch/{{ ES_DOWNLOAD_VERSION }}.tar.gz"

@@ -10,6 +10,7 @@
 
 - name: deleting nproc ulimit setting
   lineinfile: dest=/etc/security/limits.d/90-nproc.conf  regexp="^\*" state=absent
+
 #todo remove setting when second install time.
 - name: setting ulimit
   lineinfile: dest=/etc/security/limits.conf  state=present insertbefore="^# End of file" line="*                soft    nofile          65536\n*                hard    nofile          65536"

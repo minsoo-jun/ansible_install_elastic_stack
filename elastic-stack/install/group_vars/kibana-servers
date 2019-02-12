@@ -1,8 +1,6 @@
 #####################################
 # for ES-Server
 #####################################
-#Repository
-NEXUS_3RD_URL: "http://localHost/service/local/repositories/thirdparty/content/"
 
 #kibana setting
 KIBANA_OWNER: "elasticsearch"
@@ -17,5 +15,5 @@ KIBANA_HOST: "0.0.0.0"
 KIBANA_ES_URL: "http://192.168.56.101:9200"
 
 #kibana Download
-KIBANA_DOWNLOAD_VERSION: "kibana-6.3.0-linux-x86_64"
+KIBANA_DOWNLOAD_VERSION: "kibana-{{ ES_STACK_VERSION }}-linux-x86_64"
 KIBANA_DOWNLOAD_URL: "https://artifacts.elastic.co/downloads/kibana/{{ KIBANA_DOWNLOAD_VERSION }}.tar.gz"

@@ -52,7 +52,8 @@ bootstrap.memory_lock: {{ ES_MEMORY_LOCK }}
 #
 # Set the bind address to a specific IP (IPv4 or IPv6):
 #
-network.host: {{ IPV4_ADDR }}
+#network.host: {{ IPV4_ADDR }}
+network.host: {{ ES_NETWORK_HOST }}
 #
 # Set a custom port for HTTP:dmd
 #

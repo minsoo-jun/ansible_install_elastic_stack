@@ -17,12 +17,6 @@ ansible-playbook -i hosts/es-servers -k -K install/install_es.yml -e "server=es-
 ansible-playbook -i hosts/kibana-servers -k -K install/install_kibana.yml -e "server=kibana-servers" -v
 ```
 
-### Install x-pack for 5.x
-```shell
-ansible-playbook -i hosts/es-servers -k -K install/install_xpack.yml -e "server=es-servers" -v
-ansible-playbook -i hosts/kibana-servers -k -K install/install_xpack.yml -e "server=kibana-servers" -v
-```
-
 ### Start and Stop, Restart
 ```shell
 ansible-playbook -i hosts/servers -k -K install/start_es.yml -e "server=es-servers  option=start" -vvvv

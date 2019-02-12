@@ -13,6 +13,3 @@
 
 # start elasticsearch
 - include: ../../es_startstop/tasks/es_start.yml
-
-#include head plugin
-- include: plugin_head.yml

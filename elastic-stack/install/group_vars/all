@@ -7,18 +7,6 @@ equal_sign: '='
 hyphen: '-'
 
 #####################################
-# for nexus repository
+# common vars
 #####################################
-NEXUS_3RD_URL: "http://localHost/service/local/repositories/thirdparty/content/"
-
-#Java
-JDK_VERSION_DETAIL: "8u111-linux"
-JDK_VERSION_MAJOR: "jdk1.8"
-JDK_SOURCE_HOME: "/usr/local/"
-JDK_UNTAR_NAME: "jdk1.8.0_111"
-JDK_HOME: "/usr/local/{{ JDK_VERSION_MAJOR }}"
-JDK_NEXUS_URL: "{{ NEXUS_3RD_URL }}java/jdk/{{ JDK_VERSION_DETAIL }}/jdk-{{ JDK_VERSION_DETAIL }}-x64.tar.gz"
-
-#proxy setting.
-PROXY_ENV:
-  http_proxy: http://localhost:9502
+ES_STACK_VERSION: "6.6.0"
