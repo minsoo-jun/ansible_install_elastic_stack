@@ -6,6 +6,11 @@
   with_items:
     - "{{ ES_SERVER_NODES_INFO }}"
 
+- debug:
+    msg: "dest /tmp/elastic/{{ item.node }}"
+  with_items:
+    - "{{ ES_SERVER_NODES_INFO }}"
+    -
 - name: Unpack archive
   unarchive: src="/tmp/{{ ES_DOWNLOAD_VERSION }}.tar.gz" dest="/tmp/elastic/{{ item.node }}" owner={{ ES_OWNER }} group={{ ES_GROUP }} remote_src=yes
   with_items:
