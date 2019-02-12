@@ -7,7 +7,7 @@
     - "{{ ES_SERVER_NODES_INFO }}"
 
 - debug:
-    msg: "dest /tmp/elastic/{{ item.node }}"
+    msg: "dest /tmp/elastic/{{ item.node }} and /tmp/{{ ES_DOWNLOAD_VERSION }}.tar.gz"
   with_items:
     - "{{ ES_SERVER_NODES_INFO }}"
 
