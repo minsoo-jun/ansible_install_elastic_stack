@@ -17,7 +17,7 @@
   template: src=jvm.options.j2 dest={{ ES_HOME_BASIS }}elasticsearch-{{ ES_STACK_VERSION }}_{{ item.node }}/config/jvm.options backup=no
   with_items:
     - "{{ ES_SERVER_NODES_INFO }}"
-    -
+
 - name: deploy start shell
   template: src=startup.sh.j2 dest={{ ES_HOME_BASIS }}elasticsearch-{{ ES_STACK_VERSION }}_{{ item.node }}/bin/startup.sh owner={{ ES_OWNER }} group={{ ES_GROUP }} mode=0700
   with_items:

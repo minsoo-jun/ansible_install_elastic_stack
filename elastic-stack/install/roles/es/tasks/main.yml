@@ -1,20 +1,20 @@
 # add group
-#- name: Ensure group "ES_GROUP" exists
-#  group:
-#    name: "{{ ES_GROUP }}"
-#    state: present
+- name: Ensure group "ES_GROUP" exists
+  group:
+    name: "{{ ES_GROUP }}"
+    state: present
 
 # add user
-#- name: Added user
-#  user:
-#    name: "{{ ES_OWNER }}"
-#    groups: "{{ ES_GROUP }}"
+- name: Added user
+  user:
+    name: "{{ ES_OWNER }}"
+    groups: "{{ ES_GROUP }}"
 
 # unpack and make link
-#- include: download_unpack.yml
+- include: download_unpack.yml
 
 #include os parameter setting.
-#- include: os_setting.yml
+- include: os_setting.yml
 
 # make directory and apply application setting
 - include: es_setting.yml
