@@ -19,6 +19,7 @@ ES_SERVER_NODES_INFO: [{node: "01", port: 9200, tcp_port: 9300}]
 #Set the bind address to a specific IP (IPv4 or IPv6):
 ES_NETWORK_HOST: "0.0.0.0"
 
-#Elasticsearch Download
-ES_DOWNLOAD_VERSION: "elasticsearch-{{ ES_STACK_VERSION }}"
+# Elasticsearch Download
+# Linux version https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.0.0-linux-x86_64.tar.gz
+ES_DOWNLOAD_VERSION: "elasticsearch-{{ ES_STACK_VERSION }}-linux-x86_64"
 ES_DOWNLOAD_URL: "https://artifacts.elastic.co/downloads/elasticsearch/{{ ES_DOWNLOAD_VERSION }}.tar.gz"

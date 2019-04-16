@@ -66,8 +66,9 @@ transport.tcp.port: {{ item.tcp_port }}
 #
 # --------------------------------- Discovery ----------------------------------
 #
-# Pass an initial list of hosts to perform discovery when new node is started:
+# Pass an initial list of hosts to perform discovery when this node is started:
 # The default list of hosts is ["127.0.0.1", "[::1]"]
+
 # ES_SERVER_NODES_INFO
 #discovery.zen.ping.unicast.hosts: ["host1", "host2"]
 # max node per server 3
@@ -76,7 +77,7 @@ transport.tcp.port: {{ item.tcp_port }}
 {% if ES_SERVER_NODES_INFO|length == 1 %}
 {% if loop.last -%}
 {% set hosts = hosts + '"' + host + ':' ~ ES_SERVER_NODES_INFO[0].tcp_port + '"'  -%}
-discovery.zen.ping.unicast.hosts: [{{ hosts }}]
+discovery.seed_hosts: [{{ hosts }}]
 {% else -%}
 {% set hosts = hosts + '"' + host + ':' ~ ES_SERVER_NODES_INFO[0].tcp_port + '"' + ', '  -%}
 {% endif -%}
@@ -84,7 +85,7 @@ discovery.zen.ping.unicast.hosts: [{{ hosts }}]
 {% if ES_SERVER_NODES_INFO|length == 2 %}
 {% if loop.last -%}
 {% set hosts = hosts + '"' + host + ':' ~ ES_SERVER_NODES_INFO[0].tcp_port + '"' + ', ' + '"' + host + ':' ~ ES_SERVER_NODES_INFO[1].tcp_port + '"' -%}
-discovery.zen.ping.unicast.hosts: [{{ hosts }}]
+discovery.seed_hosts: [{{ hosts }}]
 {% else -%}
 {% set hosts = hosts + '"' + host + ':' ~ ES_SERVER_NODES_INFO[0].tcp_port + '"' + ', ' + '"' + host + ':' ~ ES_SERVER_NODES_INFO[1].tcp_port + '"' + ', '  -%}
 {% endif -%}
@@ -92,7 +93,7 @@ discovery.zen.ping.unicast.hosts: [{{ hosts }}]
 {% if ES_SERVER_NODES_INFO|length == 3 %}
 {% if loop.last -%}
 {% set hosts = hosts + '"' + host + ':' ~ ES_SERVER_NODES_INFO[0].tcp_port + '"'  + ', ' + '"' + host + ':' ~ ES_SERVER_NODES_INFO[1].tcp_port + '"' + ', ' + '"' + host + ':' ~ ES_SERVER_NODES_INFO[2].tcp_port + '"' -%}
-discovery.zen.ping.unicast.hosts: [{{ hosts }}]
+discovery.seed_hosts: [{{ hosts }}]
 {% else -%}
 {% set hosts = hosts + '"' + host + ':' ~ ES_SERVER_NODES_INFO[0].tcp_port + '"' + ', ' + '"' + host + ':' ~ ES_SERVER_NODES_INFO[1].tcp_port + '"' + ', '  + '"' + host + ':' ~ ES_SERVER_NODES_INFO[2].tcp_port + '"' + ', ' -%}
 {% endif -%}
@@ -100,14 +101,9 @@ discovery.zen.ping.unicast.hosts: [{{ hosts }}]
 {% endif %}
 {% endfor -%}
 
-
-
+# Bootstrap the cluster using an initial set of master-eligible nodes:
 #
-# Prevent the "split brain" by configuring the majority of nodes (total number of master-eligible nodes / 2 + 1):
-#
-#discovery.zen.minimum_master_nodes: 3
-#
-# For more information, consult the zen discovery module documentation.
+#cluster.initial_master_nodes: ["node-1", "node-2"]
 #
 # ---------------------------------- Gateway -----------------------------------
 #
