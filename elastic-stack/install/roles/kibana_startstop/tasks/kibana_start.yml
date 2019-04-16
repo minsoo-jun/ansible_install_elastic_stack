@@ -1,5 +1,5 @@
 - name: start kibana
-  command: "nohup {{ KIBANA_HOME_DIR }}/bin/startup.sh"
+  command: "{{ KIBANA_HOME_DIR }}/bin/startup.sh"
   become_user: "{{ KIBANA_OWNER }}"
 
 - wait_for:
