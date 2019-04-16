@@ -22,11 +22,11 @@
     - "{{ ES_SERVER_NODES_INFO }}"
 
 - name: to move unarchived directory
-  command: mv -f /tmp/elastic/{{ item.node }}/{{ ES_DOWNLOAD_VERSION }} {{ ES_HOME_BASIS }}{{ ES_DOWNLOAD_VERSION }}_{{ item.node }}
+  command: mv -f /tmp/elastic/{{ item.node }}/elasticsearch-{{ ES_STACK_VERSION }} {{ ES_HOME_BASIS }}elasticsearch-{{ ES_STACK_VERSION }}_{{ item.node }}
   with_items:
     - "{{ ES_SERVER_NODES_INFO }}"
 
 - name: make link
-  file: src="{{ ES_HOME_BASIS }}{{ ES_DOWNLOAD_VERSION }}_{{ item.node }}/" dest={{ ES_HOME_DIR }}_{{ item.node }} state=link
+  file: src="{{ ES_HOME_BASIS }}elasticsearch-{{ ES_STACK_VERSION }}_{{ item.node }}/" dest={{ ES_HOME_DIR }}_{{ item.node }} state=link
   with_items:
     - "{{ ES_SERVER_NODES_INFO }}"
