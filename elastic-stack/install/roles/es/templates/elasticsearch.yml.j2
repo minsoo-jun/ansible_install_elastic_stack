@@ -102,8 +102,8 @@ discovery.seed_hosts: [{{ hosts }}]
 {% endfor -%}
 
 # Bootstrap the cluster using an initial set of master-eligible nodes:
-#
-#cluster.initial_master_nodes: ["node-1", "node-2"]
+# need to fix
+cluster.initial_master_nodes: ["{{ NODE_NAME }}{{ item.node }}"]
 #
 # ---------------------------------- Gateway -----------------------------------
 #
