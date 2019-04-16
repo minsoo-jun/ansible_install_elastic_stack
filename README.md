@@ -7,7 +7,7 @@ Elastic stack version changes frequently so that I need to tool for easy install
 ## Precondition
 1. JDK must be installed
 2. Ansible must be installed: https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html
-3. Has to write permission to the elasticsearch data directory: ES_DATA_PATH: "/elastic"
+3. Root permission
 
 ### Install Elasticsearch
 ```shell
