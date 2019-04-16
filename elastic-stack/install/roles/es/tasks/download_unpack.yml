@@ -17,7 +17,7 @@
     - "{{ ES_SERVER_NODES_INFO }}"
 
 - name: remove old es home only same version
-  command: rm -rf {{ ES_HOME_BASIS }}{{ ES_DOWNLOAD_VERSION }}_{{ item.node }}
+  command: rm -rf {{ ES_HOME_BASIS }}elasticsearch-{{ ES_STACK_VERSION }}_{{ item.node }}
   with_items:
     - "{{ ES_SERVER_NODES_INFO }}"
 
