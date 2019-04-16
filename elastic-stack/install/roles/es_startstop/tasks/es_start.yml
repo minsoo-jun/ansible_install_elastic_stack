@@ -1,5 +1,5 @@
 - name: start elasticsearch
-  shell: "`nohup {{ ES_HOME_DIR }}_{{ item.node }}/bin/startup.sh`"
+  shell: "`{{ ES_HOME_DIR }}_{{ item.node }}/bin/startup.sh`"
   become_user: "{{ ES_OWNER }}"
   with_items:
     - "{{ ES_SERVER_NODES_INFO }}"
