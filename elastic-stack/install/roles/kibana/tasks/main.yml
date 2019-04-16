@@ -1,3 +1,15 @@
+# add group
+- name: Ensure group "ES_GROUP" exists
+  group:
+    name: "{{ KIBANA_GROUP }}"
+    state: present
+
+# add user
+- name: Added user
+  user:
+    name: "{{ KIBANA_OWNER }}"
+    groups: "{{ KIBANA_GROUP }}"
+
 # unpack and make link
 - include: download_unpack.yml
 
