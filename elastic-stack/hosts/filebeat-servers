@@ -1,6 +1,5 @@
 [filebeat-servers]
-192.168.56.20 INDEX_NAME="trvtomcat"
+192.168.56.100
 
-[kafka-servers]
-192.168.56.51
-192.168.56.51
+[logstash-servers]
+192.168.56.100
