@@ -6,8 +6,8 @@ FB_DOWNLOAD_VERSION: "filebeat-{{ ES_STACK_VERSION }}"
 FB_DOWNLOAD_URL: "https://artifacts.elastic.co/downloads/beats/filebeat/{{ FB_DOWNLOAD_VERSION }}-linux-x86_64.tar.gz"
 
 FB_HOME_BASIS: "/usr/local"
-FB_HOME: "{{ FB_HOME_BASIS }}/elastic-stack/filebeat"
-FB_CONF: "{{ FB_HOME_BASIS }}/elastic-stack/filebeat"
+FB_HOME: "{{ FB_HOME_BASIS }}/filebeat"
+FB_CONF: "{{ FB_HOME }}/conf"
 ##################################################
 # user info
 ##################################################
@@ -15,13 +15,17 @@ FB_OWNER: "filebeat"
 FB_GROUP: "filebeat"
 
 ##################################################
-# Port definition
+# Port definition #5050?
 ##################################################
-FILE_BEAT_PORT: "5050"
+FILE_BEAT_PORT: "5044"
 
 ##################################################
 ## Default value
 ###################################################
+LOG_FILE_PATHS: "/var/logs/apache/*.log"
+
+
+
 default_patterns : ["grok_patterns", "httpd"]
 filebeat: {
     "prospector" : [

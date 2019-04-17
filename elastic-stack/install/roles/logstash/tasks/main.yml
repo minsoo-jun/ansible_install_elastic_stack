@@ -1,0 +1,44 @@
+input {
+  kafka {
+  auto_offset_reset => "latest"
+  group_id => "popularity_logstash"
+  bootstrap_servers => ["stg-ageapdslm401.stg.hnd2.bdd.local:9092,stg-ageapdslm402.stg.hnd2.bdd.local:9092,stg-ageapdslm403.stg.hnd2.bdd.local:9092"]
+  topics  => ["trv-provider-api-raw"]
+  decorate_events => "true"
+  codec => "json"
+  }
+}
+
+filter {
+  grok {
+    match => [ "message", "%{TIMESTAMP_ISO8601:timestamp}\s+%{LOGLEVEL:severity}\s+\[%{DATA:service},%{DATA:trace},%{DATA:span},%{DATA:exportable}\]\s+%{DATA:pid}\s+---\s+\[%{DATA:thread}\]\s+%{DATA:class}\s+:\s+%{GREEDYDATA:rest}" ]
+  }
+  kv {
+    field_split => "=,"
+    source => "rest"
+    exclude_keys => ["callback"]
+  }
+  if "_grokparsefailure" in [tags] {
+    drop {}
+  }
+  mutate {
+    remove_field => [ "class" ]
+  }
+  date {
+    locale => "en"
+    match => [ "timestamp", "yyyy-MM-dd HH:mm:ss.SSS" ]
+    target => "@timestamp"
+  }
+}
+
+output {
+  elasticsearch {
+    hosts => ["stg-atrelastic-qa201z.stg.jp.local:9200","stg-atrelastic-qa202z.stg.jp.local:9200","stg-atrelastic-qa203z.stg.jp.local:9200"]
+    index => "popularity-%{srv_type}-%{+YYYY.MM.dd}"
+    user => "popularity_user"
+    document_type => "popularity"
+    password => "popularity_user"
+    retry_max_interval => 10
+    timeout => 7500
+  }
+}

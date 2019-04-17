@@ -1,0 +1,25 @@
+#####################################
+# For LOGSTASH-Server
+#####################################
+#Logstash
+LOGSTASH_OWNER: "logstash"
+LOGSTASH_GROUP: "logstash"
+
+#Lock the memory on startup:
+ES_MEMORY_LOCK: "false"
+ES_HOME_BASIS: "/usr/local/"
+ES_HOME_DIR: "/usr/local/elasticsearch"
+ES_CLUSTER_NAME: "minsoo"
+ES_DATA_PATH: "/elastic"
+
+#If you want multi instance per server, set below setting
+#ES_SERVER_NODES_INFO: [{node: "01", port: 9200, tcp_port: 9300},{node: "02", port: 9201, tcp_port: 9301}]
+ES_SERVER_NODES_INFO: [{node: "01", port: 9200, tcp_port: 9300}]
+
+#Set the bind address to a specific IP (IPv4 or IPv6):
+ES_NETWORK_HOST: "0.0.0.0"
+
+# Elasticsearch Download
+# Linux version https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.0.0-linux-x86_64.tar.gz
+ES_DOWNLOAD_VERSION: "elasticsearch-{{ ES_STACK_VERSION }}-linux-x86_64"
+ES_DOWNLOAD_URL: "https://artifacts.elastic.co/downloads/elasticsearch/{{ ES_DOWNLOAD_VERSION }}.tar.gz"
